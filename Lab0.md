@@ -8,3 +8,6 @@
 
 Đây là biểu đồ Class
 ![Diagram](https://www.planttext.com/api/plantuml/png/UhzxlqDnIM9HIMbk3bToJc9niO9Vnk55UM6PXrVbALHpAIZeAfG0cLOAmIL5cNdfO87SmuiLya2g5CeomNAPUILWYICJ7-xkJbH8pdYuknD9Xu92Ucf9ICRXBNdf8Pbv6feeKYKPXrVb8kpKGBPD1sGLs7YWdhByp1IkMYweAmCo3c_AItTAnE58d5O23K3oeAwk7P99La37b3xSFJDPeUpXxaOkXzIy552m00000F__0m00)
+
+Đây là biểu đồ ca sử dụng
+![Diagram](https://www.planttext.com/api/plantuml/png/UhzxlqDnIM9HIMbk3bTYSab-aO9Vnk55UM6PXrVbGGK2In_kMfpdStWl5rTfSMfoOd6gWb98nk5LkH2b2c2rIWg9nGgXpeO89H67DoTYKM64KE7ySDVQ0eMy321Leb2ISNXBNhf2IIPCeJ4N5y8f2hgwTc3ZCOICkU3kWoj25p7YSaZDIm5v4G000F__0m00)
