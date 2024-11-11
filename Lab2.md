@@ -69,3 +69,213 @@ Biểu đồ trên mô tả cách các lớp tương tác với nhau để tạo
 - **PayrollAdministrator** sẽ tương tác với hệ thống qua *ReportGenerator*, cung cấp các tiêu chí cho báo cáo thông qua *ReportCriteria*, và xem báo cáo qua *Report*. Cuối cùng, *ReportSaver* sẽ lưu hoặc bỏ báo cáo dựa trên lựa chọn của *PayrollAdministrator*.
 
 - Các lớp và quy trình này giúp phân tích rõ hơn từng bước xử lý và quản lý báo cáo, đảm bảo tính logic và toàn vẹn trong hệ thống.
+
+
+# Code Java mô phỏng ca sử dụng Maintain Timecard
+
+Dưới đây là code Java để mô phỏng ca sử dụng *Maintain Timecard*, trong đó hệ thống quản lý thẻ chấm công cho phép các chức năng chính như thêm, chỉnh sửa, xóa và xem các bản ghi chấm công cho từng nhân viên.
+
+```java
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+// Model lớp Timecard đại diện cho bản ghi chấm công
+class Timecard {
+    private String date;
+    private double hoursWorked;
+
+    public Timecard(String date, double hoursWorked) {
+        this.date = date;
+        this.hoursWorked = hoursWorked;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public double getHoursWorked() {
+        return hoursWorked;
+    }
+
+    public void setHoursWorked(double hoursWorked) {
+        this.hoursWorked = hoursWorked;
+    }
+
+    @Override
+    public String toString() {
+        return "Date: " + date + ", Hours Worked: " + hoursWorked;
+    }
+}
+
+// Lớp Employee đại diện cho một nhân viên và danh sách các bản ghi chấm công của họ
+class Employee {
+    private String employeeId;
+    private String name;
+    private List<Timecard> timecards;
+
+    public Employee(String employeeId, String name) {
+        this.employeeId = employeeId;
+        this.name = name;
+        this.timecards = new ArrayList<>();
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Timecard> getTimecards() {
+        return timecards;
+    }
+
+    public void addTimecard(Timecard timecard) {
+        timecards.add(timecard);
+    }
+
+    public void removeTimecard(String date) {
+        timecards.removeIf(tc -> tc.getDate().equals(date));
+    }
+
+    public Timecard findTimecardByDate(String date) {
+        for (Timecard tc : timecards) {
+            if (tc.getDate().equals(date)) {
+                return tc;
+            }
+        }
+        return null;
+    }
+}
+
+// Lớp TimecardSystem để quản lý các chức năng chính cho việc Maintain Timecard
+class TimecardSystem {
+    private Map<String, Employee> employees = new HashMap<>();
+    private Scanner scanner = new Scanner(System.in);
+
+    public void addEmployee(String employeeId, String name) {
+        employees.put(employeeId, new Employee(employeeId, name));
+    }
+
+    public void addTimecard(String employeeId) {
+        Employee employee = employees.get(employeeId);
+        if (employee == null) {
+            System.out.println("Employee not found.");
+            return;
+        }
+
+        System.out.print("Enter date (YYYY-MM-DD): ");
+        String date = scanner.nextLine();
+        System.out.print("Enter hours worked: ");
+        double hours = scanner.nextDouble();
+        scanner.nextLine(); // consume newline
+
+        employee.addTimecard(new Timecard(date, hours));
+        System.out.println("Timecard added.");
+    }
+
+    public void editTimecard(String employeeId) {
+        Employee employee = employees.get(employeeId);
+        if (employee == null) {
+            System.out.println("Employee not found.");
+            return;
+        }
+
+        System.out.print("Enter date of timecard to edit (YYYY-MM-DD): ");
+        String date = scanner.nextLine();
+        Timecard timecard = employee.findTimecardByDate(date);
+        if (timecard == null) {
+            System.out.println("Timecard not found.");
+            return;
+        }
+
+        System.out.print("Enter new hours worked: ");
+        double newHours = scanner.nextDouble();
+        scanner.nextLine(); // consume newline
+
+        timecard.setHoursWorked(newHours);
+        System.out.println("Timecard updated.");
+    }
+
+    public void deleteTimecard(String employeeId) {
+        Employee employee = employees.get(employeeId);
+        if (employee == null) {
+            System.out.println("Employee not found.");
+            return;
+        }
+
+        System.out.print("Enter date of timecard to delete (YYYY-MM-DD): ");
+        String date = scanner.nextLine();
+        employee.removeTimecard(date);
+        System.out.println("Timecard deleted if existed.");
+    }
+
+    public void viewTimecards(String employeeId) {
+        Employee employee = employees.get(employeeId);
+        if (employee == null) {
+            System.out.println("Employee not found.");
+            return;
+        }
+
+        System.out.println("Timecards for " + employee.getName() + ":");
+        for (Timecard timecard : employee.getTimecards()) {
+            System.out.println(timecard);
+        }
+    }
+}
+
+// Lớp Main để chạy hệ thống quản lý timecard
+public class Main {
+    public static void main(String[] args) {
+        TimecardSystem system = new TimecardSystem();
+        system.addEmployee("E001", "John Doe");
+        system.addEmployee("E002", "Jane Smith");
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\n1. Add Timecard");
+            System.out.println("2. Edit Timecard");
+            System.out.println("3. Delete Timecard");
+            System.out.println("4. View Timecards");
+            System.out.println("5. Exit");
+            System.out.print("Select an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter employee ID: ");
+                    String empId = scanner.nextLine();
+                    system.addTimecard(empId);
+                    break;
+                case 2:
+                    System.out.print("Enter employee ID: ");
+                    empId = scanner.nextLine();
+                    system.editTimecard(empId);
+                    break;
+                case 3:
+                    System.out.print("Enter employee ID: ");
+                    empId = scanner.nextLine();
+                    system.deleteTimecard(empId);
+                    break;
+                case 4:
+                    System.out.print("Enter employee ID: ");
+                    empId = scanner.nextLine();
+                    system.viewTimecards(empId);
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+}
+
+
+
