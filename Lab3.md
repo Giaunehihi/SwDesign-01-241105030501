@@ -50,7 +50,7 @@
 **Application Layer:** Xử lý logic ứng dụng (Payroll Admin Control Class).<br>
 **Infrastructure Layer:** Tương tác với hệ thống phụ (Project Database Access Layer).<br>
 
-***Biểu đồ Packages:***
+***Biểu đồ Packages:*** <br>
 ![Diagram](https://www.planttext.com/api/plantuml/png/R8yx2i9G44Nxjuf7Lf9WB0GB2pTmdOpozFsOcHGXk38Bb-GMZ8qYfBm7pe7xUZnRDOYDAReAkk72lkbBGiX-ZucbyRFpdY9K_JRLM2RcBpY6n0GPtDtzxAxM60WMoahYW4bAZDsGGjwKRCluatVvB52JaMmKNl6bN9ciX-44vOw8LPT2otduV7W3003__mC0)
 
 ## 4. Kiến trúc layers và quan hệ phụ thuộc
