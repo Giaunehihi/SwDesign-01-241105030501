@@ -1,4 +1,4 @@
-# Subsystems Design - Payroll System
+# Lab5: Subsystems Design - Payroll System
 
 ## 1. Authentication Subsystem
 ### **Mục tiêu**
